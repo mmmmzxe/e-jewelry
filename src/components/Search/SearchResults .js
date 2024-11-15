@@ -1,17 +1,17 @@
 import React, { useContext } from 'react';
 import { useLocation, useParams, Link } from 'react-router-dom';
-import { products } from '../Data/data'; // Ensure products data is imported
+import { products } from '../Data/data'; 
 import { FaEye, FaHeart, FaRegHeart } from 'react-icons/fa';
 import { CartContext } from '../Context/CartContext';
-import { FavoritesContext } from '../Context/FavoritesContext'; // Import FavoritesContext
+import { FavoritesContext } from '../Context/FavoritesContext'; 
 import { fadeIn } from '../Context/variants';
 import { motion } from 'framer-motion';
 import Rating from '../Products/RatingStars';
 
 const SearchResults = () => {
   const { search } = useLocation();
-  const { category } = useParams(); // Get category from URL parameters
-  const urlCategory = new URLSearchParams(search).get('category') || ''; // Get category from URL search parameters
+  const { category } = useParams(); 
+  const urlCategory = new URLSearchParams(search).get('category') || ''; 
 
   const query = new URLSearchParams(search).get('query') || '';
   const { addToCart } = useContext(CartContext);
@@ -41,7 +41,7 @@ const SearchResults = () => {
                 <Link to={`/products/${category}/${product.id}`}>
                   <FaEye className="text-pink-900 hover:text-pink-600" />
                 </Link>
-                {/* Favorite button */}
+              
                 <button
                   onClick={() => {
                     const isFavorited = favorites.some(fav => fav.id === product.id);

@@ -20,19 +20,14 @@ const ProductDetails = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [currentCategory, setCurrentCategory] = useState(product.category.title);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSelectedImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [images.length]);
+
 
   useEffect(() => {
     let categoryIndex = categoryAll.indexOf(product.category.title);
     const categoryInterval = setInterval(() => {
       categoryIndex = (categoryIndex + 1) % categoryAll.length;
       setCurrentCategory(categoryAll[categoryIndex]);
-    }, 10000); 
+    }, 12000); 
     return () => clearInterval(categoryInterval);
   }, [product.category.title]);
 

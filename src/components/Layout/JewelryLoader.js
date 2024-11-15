@@ -2,11 +2,9 @@ import React from 'react';
 
 const JewelryLoader = () => {
   return (
-<div className="jewelry-container">
-  <div className="necklace">
-    <div className="pendant"></div>
-  </div>
-  <div className="jewelry-shadow"></div>
+<div className=' container flex justify-center items-center h-[100vh]'>
+<div className="spinner"></div>
+
 </div>
 
 

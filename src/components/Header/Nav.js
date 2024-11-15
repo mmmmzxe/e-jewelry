@@ -4,6 +4,7 @@ import {navData} from '../Data/data'
 import Search from '../Search/Search';
 
 import { IoLocationSharp } from 'react-icons/io5';
+import { Link } from 'react-router-dom';
 
 const Nav = () => {
   return (
@@ -14,10 +15,10 @@ const Nav = () => {
         <Search/>
         </li>
       
-        {navData.map((item , index)=>{
+        {navData.map((item)=>{
           return(
-            <li key={index}>
-              <a className=' uppercase text-sm  md:text-black text-white  transition-all duration-300' href={item.href}>{item.name}</a>
+            <li key={item.id}>
+              <Link className=' uppercase text-sm  md:text-black text-white  transition-all duration-300' to={item.href}>{item.name}</Link>
             </li>
            
           )

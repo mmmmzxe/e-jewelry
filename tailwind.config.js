@@ -38,7 +38,7 @@ module.exports = {
         menu: "url('assets/img/menu/bg3.png')",
         section: "url('assets/img/about/13.jpg')",
         AboutGifts:"url('assets/img/about/1.png')",
-       
+      
         newsletter: "url('assets/img/newsletter/bg.png')",
         footer: "url('assets/img/footer/bg2.jpg')",
       },

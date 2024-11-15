@@ -13,7 +13,7 @@ function CategoryHighlight({ categoryName }) {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentProductIndex((prevIndex) => (prevIndex + 1) % filteredProducts.length);
-    }, 10000);
+    }, 2000);
 
 
     return () => clearInterval(interval);
@@ -31,7 +31,7 @@ function CategoryHighlight({ categoryName }) {
   return (
     <div>
       <main>
-        <div className="flex w-1/2 flex-col justify-center items-center">
+        <div className="flex md:w-1/2 w-full flex-col justify-center items-center">
           <p>{categoryName} Collection</p>
           <h2 className="h2">{productsToShow[0]?.category.title}</h2>
         </div>

@@ -1,7 +1,7 @@
 import React, { useContext, useState , useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { CartContext } from '../Context/CartContext';
-import { FavoritesContext } from '../Context/FavoritesContext'; // Import FavoritesContext
+import { FavoritesContext } from '../Context/FavoritesContext'; 
 import { fadeIn } from '../Context/variants';
 import { motion } from 'framer-motion';
 import Rating from './RatingStars';
@@ -13,13 +13,13 @@ import CategoryHighlight from '../Home/Hightlights';
 import bgImage from '../../assets/img/about/i2.jpg'
 
 function Products() {
-  const { category } = useParams(); // Get category from URL
+  const { category } = useParams(); 
   const { addToCart } = useContext(CartContext);
   const { favorites, addToFavorites, removeFromFavorites } = useContext(FavoritesContext);
   const [visibleProducts, setVisibleProducts] = useState(6);
-  const [currentCategory, setCurrentCategory] = useState(category); // Set initial state from URL param
+  const [currentCategory, setCurrentCategory] = useState(category); 
 
-  // Filter products by selected category
+
   const filteredProducts = products.filter(product => product.category.title === category);
 
   const loadMoreProducts = () => {

@@ -1,4 +1,4 @@
-// Socials.js
+
 import React from 'react';
 import { footerData } from '../Data/data';
 

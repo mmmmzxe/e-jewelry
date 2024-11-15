@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import {  Link } from 'react-router-dom';
 import { CartContext } from '../Context/CartContext';
-import { FavoritesContext } from '../Context/FavoritesContext'; // Import FavoritesContext
+import { FavoritesContext } from '../Context/FavoritesContext'; 
 import { fadeIn } from '../Context/variants';
 import { motion } from 'framer-motion';
 import Rating from './RatingStars';

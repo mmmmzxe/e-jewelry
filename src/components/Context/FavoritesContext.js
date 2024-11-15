@@ -4,14 +4,20 @@ import { toast } from 'react-toastify';
 export const FavoritesContext = createContext();
 
 export const FavoritesProvider = ({ children }) => {
+  const userId = localStorage.getItem('userId'); 
+
   const [favorites, setFavorites] = useState(() => {
-    const storedFavorites = localStorage.getItem('favorites');
+    const storedFavorites = userId
+      ? localStorage.getItem(`favorites_${userId}`)
+      : null; 
     return storedFavorites ? JSON.parse(storedFavorites) : [];
   });
 
   useEffect(() => {
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-  }, [favorites]);
+    if (userId) {
+      localStorage.setItem(`favorites_${userId}`, JSON.stringify(favorites)); 
+    }
+  }, [favorites, userId]);
 
   const addToFavorites = (product) => {
     setFavorites((prevFavorites) => {
@@ -29,17 +35,16 @@ export const FavoritesProvider = ({ children }) => {
           },
         });
 
-        return [...prevFavorites, product]; 
+        return [...prevFavorites, product];
       }
-      return prevFavorites; 
+      return prevFavorites;
     });
   };
 
   const removeFromFavorites = (productId) => {
     setFavorites((prevFavorites) => {
       const updatedFavorites = prevFavorites.filter((item) => item.id !== productId);
-      
-    
+
       toast.success(`Removed from Favorites`, {
         autoClose: 4000,
         position: "top-center",
@@ -53,7 +58,7 @@ export const FavoritesProvider = ({ children }) => {
         },
       });
 
-      return updatedFavorites; 
+      return updatedFavorites;
     });
   };
 

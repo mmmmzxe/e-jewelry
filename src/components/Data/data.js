@@ -19,9 +19,9 @@ import Cart from "../Cart/Cart";
 
 
 export const navData = [
-  { href: "/jewelry", name: "Jewlry" },
-  { href: "/allproducts", name: "products" },
-  { href: "/gifts", name: "Gifts" },
+  {id:1, href: "/jewelry", name: "Jewlry" },
+  {id:2, href: "/allproducts", name: "products" },
+  {id:3, href: "/gifts", name: "Gifts" },
 ];
 export const gifts = [
    {
@@ -128,7 +128,7 @@ export const footerData = {
       { id: 3, href: "/", icon: <FaInstagram /> },
       { id: 4, href: "/", icon: <FaPinterestP /> },
       { id: 5, href: "/", icon: <FaDiscord /> },
-      { id: 6, icon: <Cart /> },
+     
     ],
   },
 };
@@ -163,7 +163,18 @@ export const footerLinks = [
   },
 ];
 export const categoryAll = ['Diamond', 'Necklaces', 'Earrings', 'Bracelets', 'Rings', 'Charms'];
-export const options = ["All Categories", "Earrings", "Necklaces", "Rings"]; 
+export const options = [
+  { id: 1, name: "All Categories" },
+  { id: 2, name: "Diamond" },
+  { id: 3, name: "Necklaces" },
+  { id: 4, name: "Earrings" },
+  { id: 5, name: "Bracelets" },
+  { id: 6, name: "Rings" },
+  { id: 7, name: "Charms" }
+];
+
+ 
+
 export const categories = {
   Necklaces: {
     title: "Necklaces",

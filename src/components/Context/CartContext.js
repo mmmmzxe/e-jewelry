@@ -2,88 +2,74 @@ import React, { createContext, useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 export const CartContext = createContext();
-
 export const CartProvider = ({ children }) => {
+  const userId = localStorage.getItem('userId');  
+
   const [cartItems, setCartItems] = useState(() => {
-    const savedCart = localStorage.getItem('cartItems');
+    const savedCart = userId ? localStorage.getItem(`cartItems_${userId}`) : null;
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
   useEffect(() => {
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  }, [cartItems]);
+    if (userId) {
+      localStorage.setItem(`cartItems_${userId}`, JSON.stringify(cartItems));
+    }
+  }, [cartItems, userId]);
 
   const addToCart = (product) => {
     setCartItems((prevItems) => {
       const existingProduct = prevItems.find(item => item.id === product.id);
+      toast.success(` Add Product`, {
+        autoClose: 4000,
+        position: "top-center",
+        hideProgressBar: false,
+        pauseOnHover: true,
+        draggable: true,
+        style: { color: "black" },
+        iconTheme: {
+          primary: '#000',
+          secondary: '#fff',
+        },
+      });
       if (existingProduct) {
-        toast.success(`Added ${product.name} in the cart`, {
-          autoClose: 4000,
-          position: "top-center",
-          hideProgressBar: false,
-          pauseOnHover: true,
-          draggable: true,
-          style: { color: "black" },
-          iconTheme: {
-            primary: '#000',
-            secondary: '#fff',
-          },
-        });
-
         return prevItems.map(item =>
           item.id === product.id ? { ...item, count: item.count + 1 } : item
         );
       } else {
-        toast.success(`Added ${product.name} to the cart`, {
-          autoClose: 4000,
-          position: "top-center",
-          hideProgressBar: false,
-          pauseOnHover: true,
-          draggable: true,
-          className: "custom-toast-success",
-          bodyClassName: "custom-body",
-          progressClassName: "custom-progress",
-        });
-
         return [...prevItems, { ...product, count: 1 }];
       }
+      
     });
   };
 
   const removeFromCart = (productId) => {
     setCartItems((prevItems) => {
       const updatedItems = prevItems.filter(item => item.id !== productId);
-  
-      localStorage.setItem('cartItems', JSON.stringify(updatedItems));
-  
+      toast.success(`Removed from Cart`, {
+        autoClose: 4000,
+        position: "top-center",
+        hideProgressBar: false,
+        pauseOnHover: true,
+        draggable: true,
+        style: { color: "black" },
+        iconTheme: {
+          primary: '#000',
+          secondary: '#fff',
+        },
+      });
+      localStorage.setItem(`cartItems_${userId}`, JSON.stringify(updatedItems));
       return updatedItems;
     });
-  
-    toast.info('Item removed from cart', {
-      position: "top-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      pauseOnHover: true,
-      draggable: true,
-    });
   };
 
-  const updateQuantity = (productId, quantity) => {
-    setCartItems((prevItems) =>
-      prevItems.map(item =>
-        item.id === productId ? { ...item, count: quantity } : item
-      )
-    );
-  };
-
-  
   const clearCart = () => {
     setCartItems([]);
   };
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity, clearCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
       {children}
     </CartContext.Provider>
   );
 };
+

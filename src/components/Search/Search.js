@@ -5,7 +5,7 @@ import CategorySelect from './Options';
 
 export default function Search() {
     const [searchTerm, setSearchTerm] = useState('');
-    const [category, setCategory] = useState(''); // State to hold the selected category
+    const [category, setCategory] = useState(''); 
     const navigate = useNavigate();
 
     const handleSearchChange = (event) => {
