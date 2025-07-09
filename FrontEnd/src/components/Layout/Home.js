@@ -25,7 +25,6 @@ const Home =()=>{
       <Menu /> 
  
       <AboutUs/>
-      <CategoryHighlight categoryName="Diamond" />
   
       <CategoryHighlight categoryName="Necklaces" />
    
