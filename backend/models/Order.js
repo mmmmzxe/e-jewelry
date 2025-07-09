@@ -11,7 +11,7 @@ const OrderSchema = new mongoose.Schema({
       image: String,
     }
   ],
-  totalCart: { type: Number, required: true },
+  total: { type: Number, required: true },
   formData: {
     name: String,
     email: String,
@@ -22,6 +22,7 @@ const OrderSchema = new mongoose.Schema({
     zipCode: String,
   },
   deliveryMethod: String,
+  status: { type: String, default: 'Pending' },
   customLocation: {
     name: String,
     address: String,

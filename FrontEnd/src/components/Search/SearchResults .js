@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useLocation, useParams, Link } from 'react-router-dom';
 // import { products } from '../Data/data'; // Remove static import
 import { FaEye, FaHeart, FaRegHeart } from 'react-icons/fa';
-import { CartContext } from '../Context/CartContext';
-import { FavoritesContext } from '../Context/FavoritesContext'; 
-import { fadeIn } from '../Context/variants';
+import { CartContext } from '../../Context/CartContext';
+import { FavoritesContext } from '../../Context/FavoritesContext'; 
+import { fadeIn } from '../../Context/variants';
 import { motion } from 'framer-motion';
-import Rating from '../Products/RatingStars';
+import Rating from '../../Pages/Products/RatingStars';
 
 const SearchResults = () => {
   const { search } = useLocation();
