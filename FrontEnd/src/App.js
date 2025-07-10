@@ -25,6 +25,7 @@ import DashboardUsers from './DashBoard/Pages/DashboardUsers';
 import DashboardOrders from './DashBoard/Pages/DashboardOrders';
 import DashboardProducts from './DashBoard/Pages/DashboardProducts';
 import DashboardCategories from './DashBoard/Pages/DashboardCategories';
+import Profile from './Pages/Profile';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -58,6 +59,7 @@ function AppRoutes() {
         <Route path="/gifts" element={<Gifts />} />
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/orderdone" element={<OrderDone />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route index element={<DashboardHome />} />
           <Route path="users" element={<DashboardUsers />} />

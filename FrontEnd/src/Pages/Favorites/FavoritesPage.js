@@ -1,13 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { FavoritesContext } from '../../Context/FavoritesContext';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchCart, addToCart } from '../../store/slices/cartSlice';
+import { fetchFavorites, removeFromFavorites } from '../../store/slices/favoritesSlice';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FaEye, FaTrash } from 'react-icons/fa';
-import { CartContext } from '../../Context/CartContext';
 
 const FavoritesPage = () => {
-  const { favorites, removeFromFavorites } = useContext(FavoritesContext);
-  const { addToCart } = useContext(CartContext);
+  const { cartItems } = useSelector((state) => state.cart);
+  const { favorites } = useSelector((state) => state.favorites);
+  const dispatch = useDispatch();
   const [username, setUsername] = useState('');
 
   useEffect(() => {
@@ -16,6 +18,11 @@ const FavoritesPage = () => {
       setUsername(storedUsername);
     }
   }, []);
+
+  useEffect(() => {
+    dispatch(fetchCart());
+    dispatch(fetchFavorites());
+  }, [dispatch]);
 
   return (
     <div className="pt-48 container pb-5">
@@ -39,7 +46,7 @@ const FavoritesPage = () => {
                   <FaEye className="text-pink-900 hover:text-pink-600" />
                 </Link>
                 <button
-                  onClick={() => removeFromFavorites(product.id)}
+                  onClick={() => dispatch(removeFromFavorites(product.id))}
                   className="text-red-500 hover:text-red-700"
                 >
                   <FaTrash size={20} />
@@ -53,7 +60,7 @@ const FavoritesPage = () => {
                   {product.name}
                 </h4>
                 <span className="px-5">{product.price} $</span>
-                <button className="btn3" onClick={() => addToCart(product)}>
+                <button className="btn3" onClick={() => dispatch(addToCart(product))}>
                   Add to cart
                 </button>
               </div>

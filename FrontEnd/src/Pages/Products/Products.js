@@ -1,7 +1,8 @@
-import React, { useContext, useState , useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
-import { CartContext } from '../../Context/CartContext';
-import { FavoritesContext } from '../../Context/FavoritesContext'; 
+import { addToCart } from '../../store/slices/cartSlice';
+import { addToFavorites, removeFromFavorites } from '../../store/slices/favoritesSlice';
 import { fadeIn } from '../../Context/variants';
 import { motion } from 'framer-motion';
 import Rating from './RatingStars';
@@ -14,8 +15,8 @@ import bgImage from '../../assets/img/about/i2.jpg'
 
 function Products() {
   const { category } = useParams(); 
-  const { addToCart } = useContext(CartContext);
-  const { favorites, addToFavorites, removeFromFavorites } = useContext(FavoritesContext);
+  const dispatch = useDispatch();
+  const { favorites } = useSelector(state => state.favorites);
   const [visibleProducts, setVisibleProducts] = useState(6);
   const [currentCategory, setCurrentCategory] = useState(category); 
   const [products, setProducts] = useState([]);
@@ -84,16 +85,16 @@ function Products() {
                
                   <button
                     onClick={() => {
-                      const isFavorited = favorites.some(fav => fav._id === product._id || fav.id === product.id);
+                      const isFavorited = favorites.some(fav => String(fav._id || fav.id) === String(product._id || product.id));
                       if (isFavorited) {
-                        removeFromFavorites(product._id || product.id);
+                        dispatch(removeFromFavorites(product._id || product.id));
                       } else {
-                        addToFavorites(product);
+                        dispatch(addToFavorites(product));
                       }
                     }}
                     className="text-pink-900 hover:text-pink-600"
                   >
-                    {favorites.some(fav => fav._id === product._id || fav.id === product.id) ? <FaHeart /> : <FaRegHeart />}
+                    {favorites.some(fav => String(fav._id || fav.id) === String(product._id || product.id)) ? <FaHeart /> : <FaRegHeart />}
                   </button>
                 </div>
                 <div className="product-image">
@@ -102,11 +103,12 @@ function Products() {
                 <div className="p-4">
                   <h4 className="text-pink-900 font-bold text-lg">{product.name}</h4>
                   <p className="text-stone-500 mb-2">{product.description}</p>
-                  <Rating maxRating={5} />
+                  {'★'.repeat(Math.round(product.rating))}
+                  {'☆'.repeat(5 - Math.round(product.rating))}
                   <div className='flex justify-center items-center'>
                     <button
                       className="btn mt-4 w-1/2"
-                      onClick={() => addToCart(product)}
+                      onClick={() => dispatch(addToCart(product))}
                     >
                       Add to cart
                     </button>

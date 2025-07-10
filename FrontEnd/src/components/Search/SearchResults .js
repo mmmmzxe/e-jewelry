@@ -1,20 +1,21 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useParams, Link } from 'react-router-dom';
 // import { products } from '../Data/data'; // Remove static import
 import { FaEye, FaHeart, FaRegHeart } from 'react-icons/fa';
-import { CartContext } from '../../Context/CartContext';
-import { FavoritesContext } from '../../Context/FavoritesContext'; 
+
 import { fadeIn } from '../../Context/variants';
 import { motion } from 'framer-motion';
-import Rating from '../../Pages/Products/RatingStars';
+import { addToFavorites, removeFromFavorites } from '../../store/slices/favoritesSlice';
+import { addToCart } from '../../store/slices/cartSlice';
 
 const SearchResults = () => {
   const { search } = useLocation();
   const { category } = useParams(); 
   const urlCategory = new URLSearchParams(search).get('category') || ''; 
   const query = new URLSearchParams(search).get('query') || '';
-  const { addToCart } = useContext(CartContext);
-  const { favorites, addToFavorites, removeFromFavorites } = useContext(FavoritesContext);
+  const dispatch = useDispatch();
+  const { favorites } = useSelector(state => state.favorites);
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -60,9 +61,9 @@ const SearchResults = () => {
                   onClick={() => {
                     const isFavorited = favorites.some(fav => fav.id === product._id);
                     if (isFavorited) {
-                      removeFromFavorites(product._id);
+                      dispatch(removeFromFavorites(product._id));
                     } else {
-                      addToFavorites(product);
+                      dispatch(addToFavorites(product));
                     }
                   }}
                   className="text-pink-900 hover:text-pink-600"
@@ -76,11 +77,12 @@ const SearchResults = () => {
               <div className="p-4">
                 <h4 className="text-pink-900 font-bold text-lg">{product.name}</h4>
                 <p className="text-stone-500 mb-2">{product.description}</p>
-                <Rating maxRating={5} />
+                {'★'.repeat(Math.round(product.rating))}
+                {'☆'.repeat(5 - Math.round(product.rating))}
                 <div className='flex justify-center items-center'>
                   <button
                     className="btn mt-4 w-1/2"
-                    onClick={() => addToCart(product)}
+                    onClick={() => dispatch(addToCart(product))}
                   >
                     Add to cart
                   </button>

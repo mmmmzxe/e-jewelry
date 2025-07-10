@@ -1,12 +1,14 @@
-import React, { useContext, useRef, useEffect } from 'react';
-import { FavoritesContext } from '../../Context/FavoritesContext';
+import React, { useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchFavorites, removeFromFavorites } from '../../store/slices/favoritesSlice';
 import { motion } from 'framer-motion';
 import { fadeIn } from '../../Context/variants';
 import { FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 function FavoritesPopup({ visibility, onClose }) {
-  const { favorites, removeFromFavorites } = useContext(FavoritesContext);
+  const { favorites } = useSelector(state => state.favorites);
+  const dispatch = useDispatch();
   const popupRef = useRef(null);
   const navigate = useNavigate();
 
@@ -66,7 +68,7 @@ function FavoritesPopup({ visibility, onClose }) {
                   </p>
                 </div>
                 <button
-                  onClick={() => removeFromFavorites(product._id || product.id)}
+                  onClick={() => dispatch(removeFromFavorites(product._id || product.id))}
                   className="text-gray-500 hover:text-red-500"
                 >
                   <FaTrash size={18} />

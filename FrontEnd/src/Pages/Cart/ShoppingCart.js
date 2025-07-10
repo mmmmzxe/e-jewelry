@@ -1,27 +1,33 @@
-import React, { useContext } from 'react';
-import { CartContext } from '../../Context/CartContext';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchCart, removeFromCart } from '../../store/slices/cartSlice';
 import { fadeIn } from '../../Context/variants';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { HiOutlineTrash } from "react-icons/hi";
 
 function ShoppingCart({ visibility, onClose }) {
-  const { cartItems, removeFromCart, updateQuantity } = useContext(CartContext);
+  const { cartItems, updateQuantity } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, [dispatch]);
 
   const totalCart = cartItems.reduce((total, product) => {
     return total + product.price * product.count;
   }, 0);
 
   const increaseQuantity = (productId, currentQuantity) => {
-    updateQuantity(productId, currentQuantity + 1);
+    dispatch(updateQuantity({ productId, quantity: currentQuantity + 1 }));
   };
 
   const decreaseQuantity = (productId, currentQuantity) => {
     if (currentQuantity > 1) {
-      updateQuantity(productId, currentQuantity - 1);
+      dispatch(updateQuantity({ productId, quantity: currentQuantity - 1 }));
     } else {
-      removeFromCart(productId);
+      dispatch(removeFromCart(productId));
     }
   };
 
@@ -79,7 +85,7 @@ function ShoppingCart({ visibility, onClose }) {
                     </button>
                   </div>
                 </div>
-                <button onClick={() => removeFromCart(product.id)} className="text-gray-500 hover:text-red-500">
+                <button onClick={() => dispatch(removeFromCart(product._id || product.id))} className="text-gray-500 hover:text-red-500">
                   <HiOutlineTrash size={18} />
                 </button>
               </div>

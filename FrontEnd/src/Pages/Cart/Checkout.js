@@ -1,6 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { CartContext } from '../../Context/CartContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { clearCart } from '../../store/slices/cartSlice';
 import { toast } from 'react-toastify';
 import OrderSummary from './OrderSummary';
 import DetailsInformation from './DetailsInformation';
@@ -11,7 +12,7 @@ function Checkout() {
   const location = useLocation();
   const { cartItems, totalCart } = location.state || {};
   const navigate = useNavigate();
-  const { clearCart } = useContext(CartContext);
+  const dispatch = useDispatch();
   const [deliveryMethod, setDeliveryMethod] = useState('');
   const [showLocationInput, setShowLocationInput] = useState(false);
   const [customLocation, setCustomLocation] = useState({
@@ -45,6 +46,12 @@ function Checkout() {
     zipCode: '',
     address: ''
   });
+
+  useEffect(() => {
+    if (cartItems) {
+      dispatch(clearCart());
+    }
+  }, [cartItems, dispatch]);
 
   if (!cartItems) {
     return <p className="text-center text-gray-500">Cart is empty</p>;
@@ -125,7 +132,7 @@ function Checkout() {
       });
       if (!res.ok) throw new Error('Failed to create order');
       const order = await res.json();
-      clearCart();
+      dispatch(clearCart());
       navigate('/orderdone', {
         state: { cartItems, totalCart, shippingDetails, formData, deliveryMethod, customLocation, billingInfo, orderId: order._id }
       });

@@ -1,12 +1,14 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { CartContext } from '../../Context/CartContext';
+import { fetchCart, removeFromCart } from '../../store/slices/cartSlice';
 import { FaTrash } from 'react-icons/fa';
 import SliedProducts from '../Home/SliedProducts';
 
 function ReviewOrder() {
   const navigate = useNavigate();
-  const { cartItems, removeFromCart, updateQuantity } = useContext(CartContext);
+  const { cartItems, updateQuantity } = useSelector(state => state.cart);
+  const dispatch = useDispatch();
 
   const totalCart = cartItems.reduce((total, product) => total + product.price * product.count, 0);
 
@@ -25,7 +27,7 @@ function ReviewOrder() {
     if (product) {
       const newQuantity = product.count + change;
       if (newQuantity > 0) {
-        updateQuantity(productId, newQuantity);
+        dispatch(updateQuantity({ id: productId, quantity: newQuantity }));
       }
     }
   };
@@ -52,7 +54,7 @@ function ReviewOrder() {
                 <p className="text-gray-500">{product.count}</p>
                 <button onClick={() => handleQuantityChange(product.id, 1)} className="px-2">+</button>
               </div>
-              <button onClick={() => removeFromCart(product.id)} className="text-red-600 hover:text-red-800">
+              <button onClick={() => dispatch(removeFromCart(product._id || product.id))} className="text-red-600 hover:text-red-800">
                 <FaTrash />
               </button>
             </div>

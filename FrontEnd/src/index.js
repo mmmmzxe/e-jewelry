@@ -1,18 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+import ReactDOM from 'react-dom';
 import App from './App';
-import 'react-toastify/dist/ReactToastify.css';
-import { CartProvider } from './Context/CartContext';
-import { FavoritesProvider } from './Context/FavoritesContext';
+import store from './store/store';
+import { Provider } from 'react-redux';
+import { createRoot } from 'react-dom/client';
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const container = document.getElementById('root');
+const root = createRoot(container);
 root.render(
-  <CartProvider>
-      <FavoritesProvider>
-
+  <Provider store={store}>
     <App />
- </FavoritesProvider>
-  </CartProvider>
+  </Provider>
 );

@@ -80,7 +80,8 @@ function CategoryHighlight({ categoryName }) {
               <div className="product-title">
                 <h4 className="product-name text-pink-900 font-bold">{product.name}</h4>
                 <p className="text-stone-500">{product.description}</p>
-                <Rating maxRating={5} />
+                {'★'.repeat(Math.round(product.rating))}
+                {'☆'.repeat(5 - Math.round(product.rating))}
               </div>
             </motion.div>
           ))}

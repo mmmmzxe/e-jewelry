@@ -19,18 +19,18 @@ export default function DashboardOrders() {
   const [selectedOrder, setSelectedOrder] = useState(null);
 
   const fetchOrder = () => { fetch('http://localhost:5000/api/orders')
-    .then(res => {
-      if (!res.ok) throw new Error('Failed to fetch orders');
-      return res.json();
-    })
-    .then(data => {
-      setOrders(data);
-      setLoading(false);
-    })
-    .catch(err => {
-      setError(err.message);
-      setLoading(false);
-    });
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch orders');
+        return res.json();
+      })
+      .then(data => {
+        setOrders(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
+      });
   };
   useEffect(() => {
     fetchOrder();
@@ -207,16 +207,16 @@ export default function DashboardOrders() {
                 <h3 className="font-semibold mt-4 mb-1">Cart Items</h3>
                 {selectedOrder.cartItems && selectedOrder.cartItems.length > 0 ? (
                   <table className="min-w-full text-sm border">
-                    <thead>
+        <thead>
                       <tr className="bg-gray-100">
                         <th className="p-2 border">Image</th>
                         <th className="p-2 border">Name</th>
                         <th className="p-2 border">Product ID</th>
                         <th className="p-2 border">Price</th>
                         <th className="p-2 border">Count</th>
-                      </tr>
-                    </thead>
-                    <tbody>
+          </tr>
+        </thead>
+        <tbody>
                       {selectedOrder.cartItems.map((item, idx) => (
                         <tr key={item._id || idx}>
                           <td className="p-2 border">
@@ -226,10 +226,10 @@ export default function DashboardOrders() {
                           <td className="p-2 border">{item.productId}</td>
                           <td className="p-2 border">{item.price}</td>
                           <td className="p-2 border">{item.count}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+            </tr>
+          ))}
+        </tbody>
+      </table>
                 ) : <div className="text-gray-400">No items</div>}
               </div>
             </div>

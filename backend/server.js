@@ -41,6 +41,7 @@ const orderRoutes = require('./routes/orders');
 const statsRoutes = require('./routes/stats');
 const cartRoutes = require('./routes/cart');
 const favoritesRoutes = require('./routes/favorites');
+const feedbackRoutes = require('./routes/feedback');
 
 app.use('/api', authRoutes);
 app.use('/api/users', userRoutes);
@@ -50,6 +51,7 @@ app.use('/api/orders', orderRoutes);
 app.use('/api', statsRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/favorites', favoritesRoutes);
+app.use('/api/feedback', feedbackRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;

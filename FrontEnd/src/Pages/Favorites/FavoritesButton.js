@@ -1,12 +1,18 @@
 // FavoritesButton.js
-import React, { useContext, useState } from 'react';
-import { FavoritesContext } from '../../Context/FavoritesContext';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchFavorites } from '../../store/slices/favoritesSlice';
 import { IoMdHeartEmpty } from "react-icons/io";
 import FavoritesPopup from './Favorites';
 
 const FavoritesButton = () => {
-  const { favorites } = useContext(FavoritesContext);
+  const { favorites } = useSelector((state) => state.favorites);
   const [showPopup, setShowPopup] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchFavorites());
+  }, [dispatch]);
 
   const togglePopup = () => setShowPopup((prev) => !prev);
 

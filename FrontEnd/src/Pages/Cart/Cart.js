@@ -1,11 +1,17 @@
-import React, { useContext, useState } from 'react';
-import { CartContext } from '../../Context/CartContext';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchCart } from '../../store/slices/cartSlice';
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import ShoppingCart from './ShoppingCart';
 
 const Cart = () => {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems } = useSelector((state) => state.cart);
   const [showPopup, setShowPopup] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, [dispatch]);
 
   const togglePopup = () => setShowPopup((prev) => !prev);
   const totalItems = cartItems.reduce((total, item) => total + item.count, 0);
