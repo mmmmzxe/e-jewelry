@@ -132,6 +132,14 @@ function Checkout() {
       });
       if (!res.ok) throw new Error('Failed to create order');
       const order = await res.json();
+
+      // Remove cart from backend
+      if (userId) {
+        await fetch(`http://localhost:5000/api/cart/${userId}`, {
+          method: 'DELETE',
+        });
+      }
+
       dispatch(clearCart());
       navigate('/orderdone', {
         state: { cartItems, totalCart, shippingDetails, formData, deliveryMethod, customLocation, billingInfo, orderId: order._id }

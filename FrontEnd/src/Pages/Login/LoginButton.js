@@ -59,7 +59,7 @@ export default function LoginButton() {
         <div onClick={toggleDropdown} className="cursor-pointer">
           <UserIcon />
           {dropdownVisible && (
-            <div className="absolute right-0 mt-2 w-40 p-2 bg-white shadow-lg rounded-md overflow-hidden">
+            <div className="absolute right-0 mt-2 w-[18px] p-2 bg-white shadow-lg rounded-md overflow-hidden">
               {loading ? (
                 <div className="px-4 py-2 text-gray-500">Loading...</div>
               ) : (

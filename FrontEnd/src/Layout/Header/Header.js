@@ -122,7 +122,7 @@ const Header = () => {
             </Link>
           </motion.div>
 
-          <div className="hidden md:flex md:justify-center md:items-center">
+          <div className="hidden md:flex my-2 md:justify-center md:items-center">
             <Search />
             {isLoggedIn && user && (
               <>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import RatingStars from './RatingStars';
 import SliedProducts from '../Home/SliedProducts';
 import CategoryHighlight from '../Home/Hightlights';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
@@ -160,6 +159,7 @@ const ProductDetails = () => {
         <CategoryHighlight categoryName={product.category.title} />
         <CategoryHighlight categoryName={currentCategory} />
         {/* Feedback Section */}
+       
         <div className="mt-10">
           <h2 className="text-2xl font-bold mb-4">Feedback</h2>
           {feedbackLoading ? (
