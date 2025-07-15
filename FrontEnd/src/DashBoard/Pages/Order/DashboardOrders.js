@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import StandardTable from '../../components/common/StandardTable';
+import { useSelector, useDispatch } from 'react-redux';
+import StandardTable from '../../../components/common/StandardTable';
 import { FaEye } from 'react-icons/fa';
+import { fetchOrders, updateOrderStatus } from '../../../store/slices/ordersSlice';
 
 const STATUS_OPTIONS = [
   'Pending',
@@ -11,48 +13,22 @@ const STATUS_OPTIONS = [
 ];
 
 export default function DashboardOrders() {
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const { data: orders, loading, error } = useSelector(state => state.orders);
   const [updatingId, setUpdatingId] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
 
-  const fetchOrder = () => { fetch('http://localhost:5000/api/orders')
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to fetch orders');
-        return res.json();
-      })
-      .then(data => {
-        setOrders(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        setError(err.message);
-        setLoading(false);
-      });
-  };
   useEffect(() => {
-    fetchOrder();
-  }, []);
+    dispatch(fetchOrders());
+  }, [dispatch]);
 
   const handleStatusChange = async (orderId, newStatus) => {
     setUpdatingId(orderId);
-    try {
-      const res = await fetch(`http://localhost:5000/api/orders/${orderId}/status`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: newStatus }),
-      });
-      if (!res.ok) throw new Error('Failed to update status');
-      const updatedOrder = await res.json();
-      setOrders(orders => orders.map(o => o._id === orderId ? { ...o, status: updatedOrder.status } : o));
-    } catch (err) {
-      alert(err.message);
-    } finally {
-      setUpdatingId(null);
-      fetchOrder();
-    }
+    dispatch(updateOrderStatus({ orderId, status: newStatus }))
+      .unwrap()
+      .catch(err => alert(err))
+      .finally(() => setUpdatingId(null));
   };
 
   const openDetails = (order) => {

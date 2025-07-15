@@ -7,6 +7,9 @@ import ordersReducer from './slices/ordersSlice';
 import cartReducer from './slices/cartSlice';
 import favoritesReducer from './slices/favoritesSlice';
 import feedbackReducer from './slices/feedbackSlice';
+import usersReducer from './slices/usersSlice';
+import statsReducer from './slices/statsSlice';
+import salesReducer from './slices/salesSlice';
 
 const store = configureStore({
   reducer: {
@@ -18,6 +21,9 @@ const store = configureStore({
     cart: cartReducer,
     favorites: favoritesReducer,
     feedback: feedbackReducer,
+    users: usersReducer,
+    stats: statsReducer,
+    sales: salesReducer,
   },
 });
 

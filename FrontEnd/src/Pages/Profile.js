@@ -2,7 +2,7 @@ import React from 'react';
 import { FaUserCircle, FaBoxOpen, FaCalendarAlt, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProfile } from '../store/slices/profileSlice';
-import { fetchOrders } from '../store/slices/ordersSlice';
+import { fetchMyOrders } from '../store/slices/ordersSlice';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -11,12 +11,12 @@ const Profile = () => {
 
   React.useEffect(() => {
     dispatch(fetchProfile());
-    dispatch(fetchOrders());
+    dispatch(fetchMyOrders());
   }, [dispatch]);
 
   const handleRefresh = () => {
     dispatch(fetchProfile());
-    dispatch(fetchOrders());
+    dispatch(fetchMyOrders());
   };
 
   if (loading) return <div className="p-8 text-center">Loading profile...</div>;

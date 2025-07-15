@@ -111,8 +111,11 @@ const ProductDetails = () => {
                 {product.name}
               </h1>
               <div className="flex items-center gap-2 mb-2">
-              {'★'.repeat(Math.round(product.rating))}
-                {'☆'.repeat(5 - Math.round(product.rating))}
+              {Array.from({ length: 5 }).map((_, i) => (
+          <span key={i} className={(!product.rating || product.rating === 0) ? 'text-gray-300' : (i < Math.round(product.rating) ? 'text-yellow-400' : 'text-gray-300')}>
+            ★
+          </span>
+        ))}
                 <span className="text-gray-500 text-sm">({feedbacks.length})</span>
               </div>
               <div className="flex items-center my-2 lg:my-4 space-x-3 sm:space-x-4">

@@ -4,9 +4,10 @@ const Product = require('../models/Product');
 const Order = require('../models/Order');
 const User = require('../models/User');
 const Category = require('../models/Category');
+const { auth } = require('../middleware/auth');
 
-// Dashboard stats
-router.get('/stats', async (req, res) => {
+// Dashboard stats (protected)
+router.get('/stats', auth, async (req, res) => {
   try {
     const productsCount = await Product.countDocuments();
     const ordersCount = await Order.countDocuments();
@@ -18,8 +19,8 @@ router.get('/stats', async (req, res) => {
   }
 });
 
-// Sales per month
-router.get('/sales/monthly', async (req, res) => {
+// Sales per month (protected)
+router.get('/sales/monthly', auth, async (req, res) => {
   try {
     const sales = await Order.aggregate([
       {

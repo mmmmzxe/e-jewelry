@@ -4,8 +4,16 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const app = express();
-app.use(express.json());
+
+// فعّل CORS أولاً
 app.use(cors());
+
+// ثم راوت الكاتيجوري
+const categoryRoutes = require('./routes/categories');
+app.use('/api/categories', categoryRoutes);
+
+// ثم باقي الـ middleware
+app.use(express.json());
 
 // Disable caching for all API responses
 app.use((req, res, next) => {
@@ -36,7 +44,7 @@ const jwt = require('jsonwebtoken');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const productRoutes = require('./routes/products');
-const categoryRoutes = require('./routes/categories');
+// const categoryRoutes = require('./routes/categories'); // تم نقله للأعلى
 const orderRoutes = require('./routes/orders');
 const statsRoutes = require('./routes/stats');
 const cartRoutes = require('./routes/cart');
@@ -46,7 +54,7 @@ const feedbackRoutes = require('./routes/feedback');
 app.use('/api', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
-app.use('/api/categories', categoryRoutes);
+// app.use('/api/categories', categoryRoutes); // تم نقله للأعلى
 app.use('/api/orders', orderRoutes);
 app.use('/api', statsRoutes);
 app.use('/api/cart', cartRoutes);

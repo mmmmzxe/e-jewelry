@@ -1,51 +1,46 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { toast } from 'react-toastify';
-
-const getUserId = () => localStorage.getItem('userId');
+import {
+  fetchFavoritesApi,
+  addToFavoritesApi,
+  removeFromFavoritesApi
+} from '../../server/api/favoritesApi';
 
 export const fetchFavorites = createAsyncThunk('favorites/fetchFavorites', async (_, { rejectWithValue }) => {
-  const userId = getUserId();
-  if (!userId) {
-    toast.error('Please Login First');
-    return [];
-  }
   try {
-    const res = await axios.get(`http://localhost:5000/api/favorites/${userId}`);
-    return res.data.products || [];
+    const { data, error } = await fetchFavoritesApi();
+    if (error) throw new Error(error);
+    return data.products || [];
   } catch (err) {
-    return rejectWithValue(err.response?.data?.message || err.message);
+    toast.error('Please Login First');
+    return rejectWithValue(err.message);
   }
 });
 
 export const addToFavorites = createAsyncThunk('favorites/addToFavorites', async (product, { rejectWithValue, dispatch }) => {
-  const userId = getUserId();
-  if (!userId) {
-    toast.error('Please Login First');
-    return rejectWithValue('No user');
+  if (!product?._id && !product?.id) {
+    toast.error('Invalid product');
+    return rejectWithValue('Invalid product');
   }
   try {
-    const res = await axios.post('http://localhost:5000/api/favorites', {
-      userId,
-      productId: product._id || product.id,
-    });
+    const { data, error } = await addToFavoritesApi(product._id || product.id);
+    if (error) throw new Error(error);
     dispatch(fetchFavorites());
-    return res.data.products || [];
+    return data.products || [];
   } catch (err) {
-    return rejectWithValue(err.response?.data?.message || err.message);
+    toast.error('Please Login First');
+    return rejectWithValue(err.message);
   }
 });
 
 export const removeFromFavorites = createAsyncThunk('favorites/removeFromFavorites', async (productId, { rejectWithValue, dispatch }) => {
-  const userId = getUserId();
-  if (!userId) return rejectWithValue('No user');
   try {
-    const res = await axios.delete(`http://localhost:5000/api/favorites/${userId}/${productId}`);
- 
+    const { data, error } = await removeFromFavoritesApi(productId);
+    if (error) throw new Error(error);
     dispatch(fetchFavorites());
-    return res.data.products || [];
+    return data.products || [];
   } catch (err) {
-    return rejectWithValue(err.response?.data?.message || err.message);
+    return rejectWithValue(err.message);
   }
 });
 

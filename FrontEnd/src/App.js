@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useLocation, Navigate, Outlet } from 'react-router-dom';
 
 import ProductDetails from './Pages/Products/SinglePage';
 import Header from './Layout/Header/Header';
@@ -20,12 +20,13 @@ import FavoritesPage from './Pages/Favorites/FavoritesPage';
 import LogIn from './Pages/Login/Login';
 import SingUp from './Pages/SignUp/SingUp';
 import Dashboard from './DashBoard/Layout/Dashboard';
-import DashboardHome from './DashBoard/Pages/DashboardHome';
-import DashboardUsers from './DashBoard/Pages/DashboardUsers';
-import DashboardOrders from './DashBoard/Pages/DashboardOrders';
-import DashboardProducts from './DashBoard/Pages/DashboardProducts';
-import DashboardCategories from './DashBoard/Pages/DashboardCategories';
+import DashboardHome from './DashBoard/Pages/Chart/DashboardHome';
+import DashboardUsers from './DashBoard/Pages/User/DashboardUsers';
+import DashboardOrders from './DashBoard/Pages/Order/DashboardOrders';
+import DashboardProducts from './DashBoard/Pages/Product/DashboardProducts';
+import DashboardCategories from './DashBoard/Pages/Category/DashboardCategories';
 import Profile from './Pages/Profile';
+import FeedbackDashboard from './DashBoard/Pages/Feedback';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -36,6 +37,14 @@ const ScrollToTop = () => {
 
   return null;
 };
+
+function PrivateRoute({ children }) {
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (!user || user.role !== 'admin') {
+    return <Navigate to="/" replace />;
+  }
+  return children ? children : <Outlet />;
+}
 
 // مكون فرعي ليحتوي الراوتر والهيدر والفوتر
 function AppRoutes() {
@@ -60,12 +69,17 @@ function AppRoutes() {
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/orderdone" element={<OrderDone />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/dashboard" element={<Dashboard />}>
+        <Route path="/dashboard" element={
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        }>
           <Route index element={<DashboardHome />} />
           <Route path="users" element={<DashboardUsers />} />
           <Route path="orders" element={<DashboardOrders />} />
           <Route path="products" element={<DashboardProducts />} />
           <Route path="categories" element={<DashboardCategories />} />
+          <Route path="feedback" element={<FeedbackDashboard />} />
         </Route>
       </Routes>
       {!isDashboard && <Footer />}

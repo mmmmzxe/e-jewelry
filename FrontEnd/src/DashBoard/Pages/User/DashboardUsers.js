@@ -1,26 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import StandardTable from '../../components/common/StandardTable';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import StandardTable from '../../../components/common/StandardTable';
+import { fetchUsers } from '../../../store/slices/usersSlice';
 
 export default function DashboardUsers() {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const { users, loading, error } = useSelector(state => state.users);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/users')
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to fetch users');
-        return res.json();
-      })
-      .then(data => {
-        setUsers(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, []);
+    dispatch(fetchUsers());
+  }, [dispatch]);
 
   if (loading) return <div>Loading users...</div>;
   if (error) return <div className="text-red-600">Error: {error}</div>;

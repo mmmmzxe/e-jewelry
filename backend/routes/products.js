@@ -17,13 +17,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const storage = new CloudinaryStorage({
-  cloudinary,
-  params: {
-    folder: 'e-jewelry-products',
-    allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
-  },
-});
+
 
 // استخدم تخزين multer في الذاكرة
 const upload = multer({ storage: multer.memoryStorage() });
@@ -53,9 +47,13 @@ process.on('unhandledRejection', err => {
   console.error('Unhandled Rejection:', err);
 });
 
+const { auth, adminOnly } = require('../middleware/auth');
+
 // Create Product (with file upload)
 router.post(
   '/',
+  auth,
+  adminOnly,
   upload.fields([
     { name: 'image', maxCount: 1 },
     { name: 'images', maxCount: 10 },
@@ -176,7 +174,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 // Update Product (with file upload)
-router.put('/:id', upload.fields([
+router.put('/:id', auth, adminOnly, upload.fields([
   { name: 'image', maxCount: 1 },
   { name: 'images', maxCount: 10 }
 ]), async (req, res) => {
@@ -231,7 +229,7 @@ router.put('/:id', upload.fields([
   }
 });
 // Delete Product
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, adminOnly, async (req, res) => {
   try {
     const product = await Product.findByIdAndDelete(req.params.id);
     if (!product) return res.status(404).json({ message: 'Product not found' });
