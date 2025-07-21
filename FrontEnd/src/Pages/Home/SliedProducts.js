@@ -9,6 +9,7 @@ import { Link, useParams } from 'react-router-dom';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import JewelryLoader from '../../Layout/JewelryLoader';
 
 function SliedProducts() {
   const { category } = useParams(); 
@@ -44,7 +45,7 @@ function SliedProducts() {
     ],
   };
 
-  if (loading) return <div>Loading weekly bestsellers...</div>;
+  if (loading) return  <JewelryLoader/>;
 
   return (
     <div>

@@ -5,6 +5,7 @@ import Rating from '../Products/RatingStars';
 // import { products } from '../Data/data';
 import { FaArrowRight } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import JewelryLoader from '../../Layout/JewelryLoader';
 
 function CategoryHighlight({ categoryName }) {
   const [products, setProducts] = useState([]);
@@ -38,7 +39,7 @@ function CategoryHighlight({ categoryName }) {
     return () => clearInterval(interval);
   }, [products.length]);
 
-  if (loading) return <div>Loading {categoryName}...</div>;
+  if (loading) return <JewelryLoader/>;
   if (error) return <div>Error: {error}</div>;
   if (products.length === 0) return <div>No products found for {categoryName}.</div>;
 

@@ -3,6 +3,7 @@ import { FaUserCircle, FaBoxOpen, FaCalendarAlt, FaCheckCircle, FaTimesCircle } 
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProfile } from '../store/slices/profileSlice';
 import { fetchMyOrders } from '../store/slices/ordersSlice';
+import JewelryLoader from '../Layout/JewelryLoader';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const Profile = () => {
     dispatch(fetchMyOrders());
   };
 
-  if (loading) return <div className="p-8 text-center">Loading profile...</div>;
+  if (loading) return  <JewelryLoader/>;
   if (error) return <div className="p-8 text-center text-red-500">{error}</div>;
   if (!profile) return null;
 
@@ -44,7 +45,7 @@ const Profile = () => {
         <FaBoxOpen /> My Orders
       </h3>
       {ordersLoading ? (
-        <div>Loading orders...</div>
+         <JewelryLoader/>
       ) : ordersError ? (
         <div className="text-red-500">{ordersError}</div>
       ) : orders.length === 0 ? (

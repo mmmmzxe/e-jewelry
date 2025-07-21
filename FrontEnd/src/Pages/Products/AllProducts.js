@@ -12,6 +12,7 @@ import Section2 from '../Home/section2';
 import CategorySelect from '../../components/Search/Options';
 import { fadeIn } from '../../Context/variants';
 import Rating from './RatingStars';
+import JewelryLoader from '../../Layout/JewelryLoader';
 
 function AllProducts() {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ function AllProducts() {
     setVisibleProducts(prevCount => prevCount + 6);
   };
 
-  if (loading) return <div className="text-center py-10">Loading products...</div>;
+  if (loading) return  <JewelryLoader/>;
   if (error) return <div className="text-center text-red-600 py-10">Error: {error}</div>;
 
   return (

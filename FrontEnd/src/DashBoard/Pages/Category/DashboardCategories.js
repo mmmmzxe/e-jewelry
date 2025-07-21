@@ -9,6 +9,7 @@ import {
   updateCategory,
   deleteCategory
 } from '../../../store/slices/categoriesSlice';
+import JewelryLoader from '../../../Layout/JewelryLoader';
 
 export default function DashboardCategories() {
   const dispatch = useDispatch();
@@ -58,7 +59,7 @@ export default function DashboardCategories() {
     }
   };
 
-  if (loading) return <div>Loading categories...</div>;
+  if (loading) return  <JewelryLoader/>;
   if (error) return <div className="text-red-600">Error: {error}</div>;
 
   return (

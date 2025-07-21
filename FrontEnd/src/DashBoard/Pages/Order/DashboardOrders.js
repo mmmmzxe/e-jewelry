@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import StandardTable from '../../../components/common/StandardTable';
 import { FaEye } from 'react-icons/fa';
 import { fetchOrders, updateOrderStatus } from '../../../store/slices/ordersSlice';
+import JewelryLoader from '../../../Layout/JewelryLoader';
 
 const STATUS_OPTIONS = [
   'Pending',
@@ -41,7 +42,7 @@ export default function DashboardOrders() {
     setSelectedOrder(null);
   };
 
-  if (loading) return <div>Loading orders...</div>;
+  if (loading) return  <JewelryLoader/>;
   if (error) return <div className="text-red-600">Error: {error}</div>;
 
   return (

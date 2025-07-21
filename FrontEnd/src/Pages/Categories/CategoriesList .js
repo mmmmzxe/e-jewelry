@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import JewelryLoader from '../../Layout/JewelryLoader';
 // import { categories } from '../Data/data'; // Remove static import
 
 function CategoriesList() {
@@ -23,7 +24,7 @@ function CategoriesList() {
     fetchCategories();
   }, []);
 
-  if (loading) return <div>Loading categories...</div>;
+  if (loading) return  <JewelryLoader/>;
   if (error) return <div>Error: {error}</div>;
 
   return (

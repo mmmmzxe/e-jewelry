@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import StandardTable from '../../../components/common/StandardTable';
 import { fetchUsers } from '../../../store/slices/usersSlice';
+import JewelryLoader from '../../../Layout/JewelryLoader';
 
 export default function DashboardUsers() {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ export default function DashboardUsers() {
     dispatch(fetchUsers());
   }, [dispatch]);
 
-  if (loading) return <div>Loading users...</div>;
+  if (loading) return  <JewelryLoader/>;
   if (error) return <div className="text-red-600">Error: {error}</div>;
 
   return (

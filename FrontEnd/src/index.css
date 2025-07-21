@@ -435,9 +435,10 @@ body {
   }
 .spinner {
   position: relative;
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
+  box-shadow: 0 0 20px #b44473, 0 0 40px #a82445;
 }
 
 .spinner::before,
@@ -450,17 +451,25 @@ body {
 .spinner::before {
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(0deg, #b44473 0%, #a82445 50%);
-  animation: spin .5s infinite linear;
+  background: conic-gradient(
+    #b44473 10%,
+    #a82445 30%,
+    #fff 40%,
+    #b44473 60%,
+    #a82445 80%,
+    #fff 100%
+  );
+  animation: spin 0.8s infinite linear;
 }
 
 .spinner::after {
-  width: 85%;
-  height: 85%;
-  background-color: #ffff;
+  width: 70%;
+  height: 70%;
+  background: #fff;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px #b4447333;
 }
 
 @keyframes spin {

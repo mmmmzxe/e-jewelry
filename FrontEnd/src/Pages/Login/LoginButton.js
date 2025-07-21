@@ -1,6 +1,7 @@
 import { UserIcon } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import JewelryLoader from '../../Layout/JewelryLoader';
 
 export default function LoginButton() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -10,6 +11,8 @@ export default function LoginButton() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
+    const userData = localStorage.getItem('user');
+
     if (token) {
       setIsLoggedIn(true);
       setLoading(true);
@@ -61,7 +64,7 @@ export default function LoginButton() {
           {dropdownVisible && (
             <div className="absolute right-0 mt-2 w-[180px] p-2 bg-white shadow-lg rounded-md overflow-hidden">
               {loading ? (
-                <div className="px-4 py-2 text-gray-500">Loading...</div>
+                <JewelryLoader/>
               ) : (
                 <>
                   <div className="px-4 py-2 text-gray-700 font-bold">{username}</div>

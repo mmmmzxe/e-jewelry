@@ -96,13 +96,7 @@ function Checkout() {
       !formData.email || 
       !formData.phone
     ) {
-      toast.error('Please fill out all required fields.', {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        pauseOnHover: true,
-        draggable: true,
-      });
+    
       return;
     }
   
@@ -145,13 +139,7 @@ function Checkout() {
         state: { cartItems, totalCart, shippingDetails, formData, deliveryMethod, customLocation, billingInfo, orderId: order._id }
       });
     } catch (err) {
-      toast.error('Failed to place order. Please try again.', {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        pauseOnHover: true,
-        draggable: true,
-      });
+     
     }
   };
   

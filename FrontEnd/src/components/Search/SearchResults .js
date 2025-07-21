@@ -8,6 +8,7 @@ import { fadeIn } from '../../Context/variants';
 import { motion } from 'framer-motion';
 import { addToFavorites, removeFromFavorites } from '../../store/slices/favoritesSlice';
 import { addToCart } from '../../store/slices/cartSlice';
+import JewelryLoader from '../../Layout/JewelryLoader';
 
 const SearchResults = () => {
   const { search } = useLocation();
@@ -41,7 +42,7 @@ const SearchResults = () => {
       <h2 className="text-3xl font-bold text-gray-800">Search Results</h2>
       <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
         {loading ? (
-          <p className="text-gray-500">Loading...</p>
+          <JewelryLoader/>
         ) : filteredProducts.length > 0 ? (
           filteredProducts.map(product => (
             <motion.div

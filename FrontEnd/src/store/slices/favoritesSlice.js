@@ -12,14 +12,14 @@ export const fetchFavorites = createAsyncThunk('favorites/fetchFavorites', async
     if (error) throw new Error(error);
     return data.products || [];
   } catch (err) {
-    toast.error('Please Login First');
+    
     return rejectWithValue(err.message);
   }
 });
 
 export const addToFavorites = createAsyncThunk('favorites/addToFavorites', async (product, { rejectWithValue, dispatch }) => {
   if (!product?._id && !product?.id) {
-    toast.error('Invalid product');
+    
     return rejectWithValue('Invalid product');
   }
   try {
@@ -28,7 +28,7 @@ export const addToFavorites = createAsyncThunk('favorites/addToFavorites', async
     dispatch(fetchFavorites());
     return data.products || [];
   } catch (err) {
-    toast.error('Please Login First');
+ 
     return rejectWithValue(err.message);
   }
 });

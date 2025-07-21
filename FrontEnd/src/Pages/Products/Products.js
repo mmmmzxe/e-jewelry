@@ -12,6 +12,7 @@ import Section2 from '../Home/section2';
 import SliedProducts from '../Home/SliedProducts';
 import CategoryHighlight from '../Home/Hightlights';
 import bgImage from '../../assets/img/about/i2.jpg'
+import JewelryLoader from '../../Layout/JewelryLoader';
 
 function Products() {
   const { category } = useParams(); 
@@ -51,7 +52,7 @@ function Products() {
 
   // Remove categoryAll interval logic for now
 
-  if (loading) return <div>Loading products...</div>;
+  if (loading) return  <JewelryLoader/>;
   if (error) return <div>Error: {error}</div>;
 
   return (

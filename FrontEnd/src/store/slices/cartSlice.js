@@ -15,7 +15,7 @@ export const fetchCart = createAsyncThunk('cart/fetchCart', async (_, { rejectWi
 
 export const addToCart = createAsyncThunk('cart/addToCart', async (product, { rejectWithValue, dispatch }) => {
   if (!product?._id && !product?.id) {
-    toast.error('Invalid product');
+    
     return rejectWithValue('Invalid product');
   }
   try {

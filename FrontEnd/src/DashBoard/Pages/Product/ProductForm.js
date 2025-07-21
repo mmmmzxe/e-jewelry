@@ -1,4 +1,5 @@
 import React from 'react';
+import JewelryLoader from '../../../Layout/JewelryLoader';
 
 export default function ProductForm({
   form,
@@ -26,7 +27,7 @@ export default function ProductForm({
       {/* Category select */}
       <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value })} className="border px-2 py-1 rounded" required>
         <option value="" disabled>Select Category</option>
-        {catLoading ? <option>Loading...</option> : null}
+        {catLoading ? <option> <JewelryLoader/></option> : null}
         {catError ? <option disabled>Error loading categories</option> : null}
         {categories.map(cat => (
           <option key={cat._id} value={cat.title}>{cat.title}</option>

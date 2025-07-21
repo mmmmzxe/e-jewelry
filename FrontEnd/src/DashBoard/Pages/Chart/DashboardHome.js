@@ -4,6 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { fetchStats } from '../../../store/slices/statsSlice';
 import { fetchMonthlySales } from '../../../store/slices/salesSlice';
 import { fetchAllFeedback } from '../../../store/slices/feedbackSlice';
+import JewelryLoader from '../../../Layout/JewelryLoader';
 
 export default function DashboardHome() {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ export default function DashboardHome() {
     }));
   }
 
-  if (loading) return <div className="text-center py-10">Loading dashboard...</div>;
+  if (loading) return  <JewelryLoader/>;
   if (error) return <div className="text-center text-red-600 py-10">Error: {error}</div>;
   if (!stats) return null;
 
@@ -42,19 +43,19 @@ export default function DashboardHome() {
     <div className="w-full">
       <h1 className="text-2xl font-bold mb-6">Dashboard Overview</h1>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
-        <div className=" border-pink-600 border rounded-lg p-6 flex flex-col items-center">
+        <div className=" bg-white border-pink-600 border rounded-lg p-6 flex flex-col items-center">
           <span className="text-3xl  font-bold">{stats.productsCount}</span>
           <span className="mt-2 ">Products</span>
         </div>
-        <div className=" border-pink-600 border rounded-lg p-6 flex flex-col items-center">
+        <div className=" bg-white border-pink-600 border rounded-lg p-6 flex flex-col items-center">
           <span className="text-3xl  font-bold">{stats.ordersCount}</span>
           <span className="mt-2 ">Orders</span>
         </div>
-        <div className="border-pink-600 border rounded-lg p-6 flex flex-col items-center">
+        <div className="  bg-white border-pink-600 border rounded-lg p-6 flex flex-col items-center">
           <span className="text-3xl  font-bold">{stats.usersCount}</span>
           <span className="mt-2 ">Users</span>
         </div>
-        <div className="border-pink-600 border  rounded-lg p-6 flex flex-col items-center">
+        <div className="bg-white border-pink-600 border  rounded-lg p-6 flex flex-col items-center">
           <span className="text-3xl  font-bold">{stats.categoriesCount}</span>
           <span className="mt-2 ">Categories</span>
         </div>
@@ -63,7 +64,7 @@ export default function DashboardHome() {
       <div className="bg-white rounded-lg shadow p-6 mb-8">
         <h2 className="text-lg font-bold mb-4">Sales (Monthly)</h2>
         {salesLoading ? (
-          <div>Loading sales chart...</div>
+         <JewelryLoader/>
         ) : salesError ? (
           <div className="text-red-600">Error: {salesError}</div>
         ) : sales.length === 0 ? (
@@ -84,7 +85,7 @@ export default function DashboardHome() {
       <div className="bg-white rounded-lg shadow p-6">
         <h2 className="text-lg font-bold mb-4">User Feedback Overview</h2>
         {feedbackLoading ? (
-          <div>Loading feedback chart...</div>
+          <JewelryLoader/>
         ) : feedbackError ? (
           <div className="text-red-600">Error: {feedbackError}</div>
         ) : feedbackChartData.length === 0 ? (

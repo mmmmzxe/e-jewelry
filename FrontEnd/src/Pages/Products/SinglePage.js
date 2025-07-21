@@ -13,6 +13,7 @@ import { fetchCategories } from '../../store/slices/categoriesSlice';
 import { fetchFeedback, submitFeedback } from '../../store/slices/feedbackSlice';
 import Rating from './RatingStars';
 import { updateProductRating } from '../../store/slices/productsSlice';
+import JewelryLoader from '../../Layout/JewelryLoader';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -68,7 +69,7 @@ const ProductDetails = () => {
     });
   };
 
-  if (loading) return <div>Loading product...</div>;
+  if (loading) return  <JewelryLoader/>
   if (error) return <div>Error: {error}</div>;
   if (!product) return <div>Product not found</div>;
 
@@ -166,7 +167,7 @@ const ProductDetails = () => {
         <div className="mt-10">
           <h2 className="text-2xl font-bold mb-4">Feedback</h2>
           {feedbackLoading ? (
-            <p className="text-gray-500">Loading feedback...</p>
+            <JewelryLoader/>
           ) : feedbacks.length === 0 ? (
             <p className="text-gray-500">No feedback yet.</p>
           ) : (

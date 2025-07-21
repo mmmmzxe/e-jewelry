@@ -5,6 +5,19 @@ const getAuthHeaders = () => {
   return token ? { 'Authorization': 'Bearer ' + token } : {};
 };
 
+axios.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+     
+      window.location = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
 export async function apiGet(url) {
   try {
     const res = await axios.get(url, { headers: getAuthHeaders() });

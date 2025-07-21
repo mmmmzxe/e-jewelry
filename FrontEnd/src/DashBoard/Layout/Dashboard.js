@@ -3,7 +3,7 @@ import { Outlet, useNavigate, Link, useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Logo from '../../assets/img/header/logo3.png';
 import { Home, Users, ShoppingCart, Package, List, Menu } from 'lucide-react';
-
+import { SlFeed } from "react-icons/sl";
 export default function Dashboard() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,7 +23,7 @@ export default function Dashboard() {
     { to: '/dashboard/orders', label: 'Orders', icon: <ShoppingCart size={20} /> },
     { to: '/dashboard/products', label: 'Products', icon: <Package size={20} /> },
     { to: '/dashboard/categories', label: 'Categories', icon: <List size={20} /> },
-    { to: '/dashboard/feedback', label: 'Feedback', icon: <List size={20} /> },
+    { to: '/dashboard/feedback', label: 'Feedback', icon: <SlFeed /> },
   ];
 
   // Responsive: close sidebar on small screens by default
@@ -43,16 +43,16 @@ export default function Dashboard() {
       <Navbar />
       <div className="flex flex-1">
         {/* Sidebar */}
-        <aside className={`bg-pink-900 text-white p-6 min-h-full flex flex-col transition-all duration-200 ${sidebarOpen ? 'w-[220px]' : 'w-[80px]'} relative`}>
+        <aside className={`text-black  border-r py-5 px-2 min-h-full flex flex-col transition-all duration-200 ${sidebarOpen ? 'w-[220px]' : 'w-[80px]'} relative`}>
           {/* Toggle button */}
           <button
-            className="absolute -right-4 top-4 bg-pink-900 border-2 border-white rounded-full p-1 z-10 "
+            className="absolute -right-4 top-4 bg-pink-900 text-white border-2 border-white rounded-full p-1 z-10 "
             onClick={() => setSidebarOpen((v) => !v)}
             title={sidebarOpen ? 'Collapse' : 'Expand'}
           >
             <Menu size={20} />
           </button>
-          {sidebarOpen &&   <h1 className="text-white text-[17px]  text-center capitalize">
+          {sidebarOpen &&   <h1 className="text-[17px]  text-center capitalize">
                 a p o l l o n i a n
               </h1>}
               {!sidebarOpen &&   <img src={Logo}>
@@ -64,11 +64,11 @@ export default function Dashboard() {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className={`flex items-center gap-3 no-underline px-2 py-2 rounded transition-colors text-white duration-150 ${isActive ? 'bg-pink-700 font-bold' : ''} ${!sidebarOpen ? 'justify-center items-center' : ''}`}
+                  className={`flex items-center gap-3 no-underline px-2 py-2 rounded transition-colors text-white  duration-150 ${isActive ? 'bg-pink-900 font-bold text-white' : ''} ${!sidebarOpen ? 'justify-center items-center ' : ''}`}
                   title={link.label}
                 >
-                  {React.cloneElement(link.icon, { className: "text-white" })}
-                  {sidebarOpen && <span className='text-white'>{link.label}</span>}
+                  {React.cloneElement(link.icon, { className: isActive ? 'bg-pink-900 text-white' : 'text-gray-500' })}
+                  {sidebarOpen && <span className={`${isActive ? 'bg-pink-900  text-white' : ''}`}>{link.label}</span>}
                 </Link>
                 
               );

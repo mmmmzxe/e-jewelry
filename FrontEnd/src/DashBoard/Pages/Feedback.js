@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllFeedback } from '../../store/slices/feedbackSlice';
 import StandardTable from '../../components/common/StandardTable';
+import JewelryLoader from '../../Layout/JewelryLoader';
 
 export default function FeedbackDashboard() {
   const dispatch = useDispatch();
@@ -32,7 +33,7 @@ export default function FeedbackDashboard() {
     <div className=" ">
       <h1 className="text-2xl font-bold mb-6">All User Feedback</h1>
       {loading ? (
-        <div>Loading feedback...</div>
+         <JewelryLoader/>
       ) : error ? (
         <div className="text-red-600">Error: {error}</div>
       ) : allFeedbacks.length === 0 ? (
