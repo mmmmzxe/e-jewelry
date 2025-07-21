@@ -124,7 +124,7 @@ const Header = () => {
 
           <div className="hidden md:flex my-2 md:justify-center md:items-center">
             <Search />
-            {isLoggedIn && user && (
+            { user && (
               <>
                 <Cart />
                 <FavoritesButton />
@@ -134,7 +134,7 @@ const Header = () => {
           </div>
 
           <div className="flex md:hidden">
-            {isLoggedIn && user && (
+            { user && (
               <>
                 <Cart />
                 <FavoritesButton />

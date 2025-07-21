@@ -1,22 +1,22 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { fetchFeedbackApi, submitFeedbackApi, fetchAllFeedbackApi } from '../../server/api/feedbackApi';
 
 export const fetchFeedback = createAsyncThunk('feedback/fetchFeedback', async (productId, { rejectWithValue }) => {
-  try {
-    const res = await axios.get(`/api/feedback/${productId}`);
-    return res.data;
-  } catch (err) {
-    return rejectWithValue(err.response?.data?.message || err.message);
-  }
+  const { data, error } = await fetchFeedbackApi(productId);
+  if (error) return rejectWithValue(error);
+  return data;
 });
 
 export const submitFeedback = createAsyncThunk('feedback/submitFeedback', async (feedbackData, { rejectWithValue }) => {
-  try {
-    const res = await axios.post('/api/feedback', feedbackData);
-    return res.data;
-  } catch (err) {
-    return rejectWithValue(err.response?.data?.message || err.message);
-  }
+  const { data, error } = await submitFeedbackApi(feedbackData);
+  if (error) return rejectWithValue(error);
+  return data;
+});
+
+export const fetchAllFeedback = createAsyncThunk('feedback/fetchAllFeedback', async (_, { rejectWithValue }) => {
+  const { data, error } = await fetchAllFeedbackApi();
+  if (error) return rejectWithValue(error);
+  return data;
 });
 
 const feedbackSlice = createSlice({
@@ -26,6 +26,7 @@ const feedbackSlice = createSlice({
     loading: false,
     error: null,
     submitting: false,
+    allFeedbacks: [],
   },
   reducers: {},
   extraReducers: builder => {
@@ -35,7 +36,10 @@ const feedbackSlice = createSlice({
       .addCase(fetchFeedback.rejected, (state, action) => { state.loading = false; state.error = action.payload; })
       .addCase(submitFeedback.pending, state => { state.submitting = true; state.error = null; })
       .addCase(submitFeedback.fulfilled, (state, action) => { state.submitting = false; state.feedbacks.push(action.payload); })
-      .addCase(submitFeedback.rejected, (state, action) => { state.submitting = false; state.error = action.payload; });
+      .addCase(submitFeedback.rejected, (state, action) => { state.submitting = false; state.error = action.payload; })
+      .addCase(fetchAllFeedback.pending, state => { state.loading = true; state.error = null; })
+      .addCase(fetchAllFeedback.fulfilled, (state, action) => { state.loading = false; state.allFeedbacks = action.payload; })
+      .addCase(fetchAllFeedback.rejected, (state, action) => { state.loading = false; state.error = action.payload; });
   }
 });
 

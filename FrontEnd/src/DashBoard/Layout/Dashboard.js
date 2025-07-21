@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate, Link, useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
+import Logo from '../../assets/img/header/logo3.png';
 import { Home, Users, ShoppingCart, Package, List, Menu } from 'lucide-react';
 
 export default function Dashboard() {
@@ -22,6 +23,7 @@ export default function Dashboard() {
     { to: '/dashboard/orders', label: 'Orders', icon: <ShoppingCart size={20} /> },
     { to: '/dashboard/products', label: 'Products', icon: <Package size={20} /> },
     { to: '/dashboard/categories', label: 'Categories', icon: <List size={20} /> },
+    { to: '/dashboard/feedback', label: 'Feedback', icon: <List size={20} /> },
   ];
 
   // Responsive: close sidebar on small screens by default
@@ -50,6 +52,11 @@ export default function Dashboard() {
           >
             <Menu size={20} />
           </button>
+          {sidebarOpen &&   <h1 className="text-white text-[17px]  text-center capitalize">
+                a p o l l o n i a n
+              </h1>}
+              {!sidebarOpen &&   <img src={Logo}>
+              </img>}
           <nav className="flex flex-col gap-4 mt-8">
             {links.map(link => {
               const isActive = location.pathname === link.to;
@@ -63,6 +70,7 @@ export default function Dashboard() {
                   {React.cloneElement(link.icon, { className: "text-white" })}
                   {sidebarOpen && <span className='text-white'>{link.label}</span>}
                 </Link>
+                
               );
             })}
           </nav>

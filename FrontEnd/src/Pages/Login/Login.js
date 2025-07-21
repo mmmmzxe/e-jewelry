@@ -36,7 +36,7 @@ export default function Login() {
         alert(data.message || 'Login failed');
       }
     } catch (err) {
-      alert('Error: ' + err.message);
+     
     }
   };
 

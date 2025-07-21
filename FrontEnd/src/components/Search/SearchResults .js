@@ -77,8 +77,12 @@ const SearchResults = () => {
               <div className="p-4">
                 <h4 className="text-pink-900 font-bold text-lg">{product.name}</h4>
                 <p className="text-stone-500 mb-2">{product.description}</p>
-                {'★'.repeat(Math.round(product.rating))}
-                {'☆'.repeat(5 - Math.round(product.rating))}
+                {Array.from({ length: 5 }).map((_, i) => (
+          <span key={i} className={i < Math.round(product.rating) ? 'text-yellow-400' : 'text-gray-300'}>
+            ★
+          </span>
+        ))}
+  
                 <div className='flex justify-center items-center'>
                   <button
                     className="btn mt-4 w-1/2"

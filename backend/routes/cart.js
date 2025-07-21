@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const Cart = require('../models/Cart');
+const { auth } = require('../middleware/auth');
 
 // Add or update item in cart
-router.post('/', async (req, res) => {
-  const { userId, productId, count } = req.body;
+router.post('/', auth, async (req, res) => {
+  const { productId, count } = req.body;
+  const userId = req.user.id;
   if (!userId || !productId) return res.status(400).json({ message: 'userId and productId required' });
 
   try {
@@ -26,11 +28,12 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Get cart by userId (with product details)
-router.get('/:userId', async (req, res) => {
+// Get cart for logged-in user (with product details)
+router.get('/', auth, async (req, res) => {
   try {
-    const cart = await Cart.findOne({ userId: req.params.userId }).populate('items.productId');
-    if (!cart) return res.json({ userId: req.params.userId, items: [] });
+    const userId = req.user.id;
+    const cart = await Cart.findOne({ userId }).populate('items.productId');
+    if (!cart) return res.json({ userId, items: [] });
     // Merge product details into each item
     const items = cart.items.map(item => ({
       ...item._doc,
@@ -44,9 +47,10 @@ router.get('/:userId', async (req, res) => {
 });
 
 // Remove item from cart
-router.delete('/:userId/:productId', async (req, res) => {
+router.delete('/:productId', auth, async (req, res) => {
   try {
-    const cart = await Cart.findOne({ userId: req.params.userId });
+    const userId = req.user.id;
+    const cart = await Cart.findOne({ userId });
     if (!cart) return res.status(404).json({ message: 'Cart not found' });
     cart.items = cart.items.filter(item => item.productId.toString() !== req.params.productId);
     await cart.save();
@@ -56,10 +60,11 @@ router.delete('/:userId/:productId', async (req, res) => {
   }
 });
 
-// Remove entire cart for a user
-router.delete('/:userId', async (req, res) => {
+// Remove entire cart for logged-in user
+router.delete('/', auth, async (req, res) => {
   try {
-    const cart = await Cart.findOne({ userId: req.params.userId });
+    const userId = req.user.id;
+    const cart = await Cart.findOne({ userId });
     if (!cart) return res.status(404).json({ message: 'Cart not found' });
     cart.items = [];
     await cart.save();

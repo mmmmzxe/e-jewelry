@@ -80,8 +80,13 @@ function CategoryHighlight({ categoryName }) {
               <div className="product-title">
                 <h4 className="product-name text-pink-900 font-bold">{product.name}</h4>
                 <p className="text-stone-500">{product.description}</p>
-                {'★'.repeat(Math.round(product.rating))}
-                {'☆'.repeat(5 - Math.round(product.rating))}
+             <div className='flex'>
+             {Array.from({ length: 5 }).map((_, i) => (
+          <span key={i} className={(!product.rating || product.rating === 0) ? 'text-gray-300' : (i < Math.round(product.rating) ? 'text-yellow-400' : 'text-gray-300')}>
+            ★
+          </span>
+        ))}
+      </div>
               </div>
             </motion.div>
           ))}

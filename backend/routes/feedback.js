@@ -32,4 +32,16 @@ router.get('/:productId', async (req, res) => {
   }
 });
 
+// GET /api/feedback - get all feedback for all products
+router.get('/', async (req, res) => {
+  try {
+    const feedbacks = await Feedback.find()
+      .populate('userId', 'name')
+      .populate('productId', 'name image images');
+    res.json(feedbacks);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 module.exports = router; 
