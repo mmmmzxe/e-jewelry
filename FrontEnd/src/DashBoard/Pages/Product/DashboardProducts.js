@@ -3,13 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import StandardTable from '../../../components/common/StandardTable';
 import JewelryLoader from '../../../Layout/JewelryLoader';
+import ProductModal from './ProductModal';
+import ConfirmModal from '../../../components/common/ConfirmModal';
 import {
   fetchProducts,
   addProduct,
   updateProduct,
   deleteProduct
 } from '../../../store/slices/productsSlice';
-import ProductModal from './ProductModal';
 
 export default function DashboardProducts() {
   const dispatch = useDispatch();
@@ -25,6 +26,8 @@ export default function DashboardProducts() {
   const [catError, setCatError] = useState(null);
   const [compressing, setCompressing] = useState(false);
   const [compressionProgress, setCompressionProgress] = useState(0);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [productToDelete, setProductToDelete] = useState(null);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -143,8 +146,21 @@ export default function DashboardProducts() {
   };
 
   const handleDelete = (id) => {
-    if (!window.confirm('Are you sure you want to delete this product?')) return;
-    dispatch(deleteProduct(id));
+    setProductToDelete(id);
+    setConfirmOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (productToDelete) {
+      dispatch(deleteProduct(productToDelete));
+    }
+    setConfirmOpen(false);
+    setProductToDelete(null);
+  };
+
+  const handleCancelDelete = () => {
+    setConfirmOpen(false);
+    setProductToDelete(null);
   };
 
   const handleSubmit = (e) => {
@@ -245,6 +261,13 @@ export default function DashboardProducts() {
         onSubmit={handleSubmit}
         loading={loading}
         modalType={modalType}
+      />
+      <ConfirmModal
+        open={confirmOpen}
+        title="Delete Product"
+        message="Are you sure you want to delete this product?"
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
       />
     </div>
   );

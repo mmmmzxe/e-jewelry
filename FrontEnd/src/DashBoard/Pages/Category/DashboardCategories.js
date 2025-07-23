@@ -3,6 +3,7 @@ import { Edit2 } from 'lucide-react';
 import { useSelector, useDispatch } from 'react-redux';
 import StandardTable from '../../../components/common/StandardTable';
 import CategoryModal from './CategoryModal';
+import ConfirmModal from '../../../components/common/ConfirmModal';
 import {
   fetchCategories,
   addCategory,
@@ -18,6 +19,8 @@ export default function DashboardCategories() {
   const [modalType, setModalType] = useState('add'); // 'add' or 'edit'
   const [form, setForm] = useState({ title: '', image: '', imageFile: null });
   const [editId, setEditId] = useState(null);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [categoryToDelete, setCategoryToDelete] = useState(null);
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -42,8 +45,21 @@ export default function DashboardCategories() {
   };
 
   const handleDelete = (id) => {
-    if (!window.confirm('Are you sure you want to delete this category?')) return;
-    dispatch(deleteCategory(id));
+    setCategoryToDelete(id);
+    setConfirmOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (categoryToDelete) {
+      dispatch(deleteCategory(categoryToDelete));
+    }
+    setConfirmOpen(false);
+    setCategoryToDelete(null);
+  };
+
+  const handleCancelDelete = () => {
+    setConfirmOpen(false);
+    setCategoryToDelete(null);
   };
 
   const handleSubmit = (e) => {
@@ -122,6 +138,13 @@ export default function DashboardCategories() {
         onSubmit={handleSubmit}
         loading={loading}
         modalType={modalType}
+      />
+      <ConfirmModal
+        open={confirmOpen}
+        title="Delete Category"
+        message="Are you sure you want to delete this category?"
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
       />
     </div>
   );
