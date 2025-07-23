@@ -9,10 +9,8 @@ axios.interceptors.response.use(
   response => response,
   error => {
     if (error.response && error.response.status === 401) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-     
-      window.location = '/login';
+      localStorage.clear();
+      window.location.href = '/login';
     }
     return Promise.reject(error);
   }
