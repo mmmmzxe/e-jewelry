@@ -5,7 +5,7 @@ function CategorySelect({ category, onCategoryChange, bgColor = 'md:bg-white bg-
   const [categories, setCategories] = useState([{ id: 0, title: 'All Categories' }]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/categories')
+    fetch('https://jewelry.up.railway.app/api/categories')
       .then(res => res.json())
       .then(data => {
         // data is an array of category objects

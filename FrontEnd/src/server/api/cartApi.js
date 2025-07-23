@@ -1,6 +1,6 @@
 import { apiGet, apiPost, apiDelete } from './api';
 
-const BASE_URL = 'http://localhost:5000/api/cart';
+const BASE_URL = 'https://jewelry.up.railway.app/api/cart';
 
 export const fetchCartApi = () => apiGet(BASE_URL);
 

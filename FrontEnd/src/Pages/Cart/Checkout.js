@@ -119,7 +119,7 @@ function Checkout() {
         shippingDetails,
         billingInfo,
       };
-      const res = await fetch('http://localhost:5000/api/orders', {
+      const res = await fetch('https://jewelry.up.railway.app/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderPayload),
@@ -129,7 +129,7 @@ function Checkout() {
 
       // Remove cart from backend
       if (userId) {
-        await fetch(`http://localhost:5000/api/cart/${userId}`, {
+        await fetch(`https://jewelry.up.railway.app/api/cart/${userId}`, {
           method: 'DELETE',
         });
       }

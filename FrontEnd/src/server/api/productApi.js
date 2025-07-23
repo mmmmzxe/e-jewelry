@@ -1,6 +1,6 @@
 import { apiGet, apiPost, apiPut, apiDelete } from './api';
 
-const BASE_URL = 'http://localhost:5000/api/products';
+const BASE_URL = 'https://jewelry.up.railway.app/api/products';
 
 export const fetchProductsApi = () => apiGet(BASE_URL);
 
@@ -32,6 +32,6 @@ export const deleteProductApi = (id) => apiDelete(`${BASE_URL}/${id}`);
 
 export const fetchWeeklyBestsellersApi = () => apiGet(`${BASE_URL}/weekly-bestsellers`);
 
-export const fetchProductsByCategoryApi = (category) => apiGet(`http://localhost:5000/api/categories/${category}/products`);
+export const fetchProductsByCategoryApi = (category) => apiGet(`https://jewelry.up.railway.app/api/categories/${category}/products`);
 
 export const fetchProductByIdApi = (id) => apiGet(`${BASE_URL}/${id}`); 

@@ -32,7 +32,7 @@ export default function DashboardProducts() {
 
   const fetchCategories = () => {
     setCatLoading(true);
-    fetch('http://localhost:5000/api/categories')
+    fetch('https://jewelry.up.railway.app/api/categories')
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch categories');
         return res.json();

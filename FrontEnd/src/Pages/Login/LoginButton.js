@@ -16,7 +16,7 @@ export default function LoginButton() {
     if (token) {
       setIsLoggedIn(true);
       setLoading(true);
-      fetch('http://localhost:5000/api/profile', {
+      fetch('https://jewelry.up.railway.app/api/profile', {
         headers: {
           'Authorization': `Bearer ${token}`
         }

@@ -1,6 +1,6 @@
 import { apiGet, apiPost, apiDelete } from './api';
 
-const BASE_URL = 'http://localhost:5000/api/favorites';
+const BASE_URL = 'https://jewelry.up.railway.app/api/favorites';
 
 export const fetchFavoritesApi = () => apiGet(BASE_URL);
 

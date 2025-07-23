@@ -1,6 +1,6 @@
 import { apiGet, apiPost, apiPut, apiDelete } from './api';
 
-const BASE_URL = 'http://localhost:5000/api/categories';
+const BASE_URL = 'https://jewelry.up.railway.app/api/categories';
 
 export const fetchCategoriesApi = () => apiGet(BASE_URL);
 
